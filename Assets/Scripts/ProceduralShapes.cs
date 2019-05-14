@@ -26,8 +26,6 @@ public class ProceduralShapes : MonoBehaviour
 
     void GenerateQuad(float newWidth, float newHeight)
     {
-        // https://docs.unity3d.com/Manual/Example-CreatingaBillboardPlane.html
-
         // Step 1 - Create & Assign Vertices
         Vector3[] vertices = new Vector3[4];
         vertices[0] = new Vector3(0, 0, 0);
