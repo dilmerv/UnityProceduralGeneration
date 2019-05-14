@@ -1,4 +1,4 @@
-# UnityProceduralGeneration
+# Unity3d Procedural Generation
 Various examples for generating 3D procedurally with Unity3d
 
 ### Scenes in this repository
