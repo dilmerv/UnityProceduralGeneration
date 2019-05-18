@@ -11,6 +11,9 @@ public class ProceduralShapes : MonoBehaviour
     private float height = 10.0f;
 
     [SerializeField]
+    private float depth = 10.0f;
+
+    [SerializeField]
     private string randomShaderTypeName = "Lightweight Render Pipeline/Lit";
 
     [SerializeField]
@@ -24,60 +27,101 @@ public class ProceduralShapes : MonoBehaviour
 
     private Mesh mesh;
 
+    #region Random Generation Implementation
+    
+    [SerializeField]
+    private bool shouldGenerateRandomSizes = false;
+
+    [SerializeField, Range(1, 100)]
+    private int randomSeed = 10;
+
+    private int prevRandomSeed = 10;
+
+    [SerializeField, Range(1.0f, 30.0f)]
+    private float maxRandomSize = 10.0f;
+    
+    #endregion
+
     void Start()
     {
+        Random.InitState(randomSeed);
+
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+
         ApplyRandomMaterial();
     }
 
-    void Update() { 
+    void Update() 
+    { 
         if(shapeType == ShapeType.Quad)
-            GenerateQuad(width, height);
-        else if(shapeType == ShapeType.Cube)
-            GenerateCube(width, height);
+        {
+            GenerateQuad();
+        }
+        else if(shapeType == ShapeType.Cube && !shouldGenerateRandomSizes)
+        {
+            GenerateCube();
+        }
+
+        if(prevRandomSeed != randomSeed && shouldGenerateRandomSizes)
+        {
+            prevRandomSeed = randomSeed;
+            
+            GenerateRandomSizes();
+            
+            GenerateCube();
+
+            ApplyRandomMaterial();
+        }
     } 
 
-    void GenerateCube(float newWidth, float newHeight)
+    void GenerateRandomSizes ()
+    {
+        width = Random.Range(1.0f, maxRandomSize);
+        height = Random.Range(1.0f, maxRandomSize);
+        depth = Random.Range(1.0f, maxRandomSize);
+    }
+
+    void GenerateCube()
     {
         // Step 1 - Create & Assign Vertices
         Vector3[] vertices = new Vector3[24];
         
         // Front Face Vertices
         vertices[0] = new Vector3(0, 0, 0);
-        vertices[1] = new Vector3(newWidth, 0, 0);
-        vertices[2] = new Vector3(0, newHeight, 0);
-        vertices[3] = new Vector3(newWidth, newHeight, 0);
+        vertices[1] = new Vector3(width, 0, 0);
+        vertices[2] = new Vector3(0, height, 0);
+        vertices[3] = new Vector3(width, height, 0);
 
         // Top Face Vertices
-        vertices[4] = new Vector3(0, newHeight, 0);
-        vertices[5] = new Vector3(newWidth, newHeight, 0);
-        vertices[6] = new Vector3(0, newHeight, newWidth);
-        vertices[7] = new Vector3(newWidth, newHeight, newWidth);
+        vertices[4] = new Vector3(0, height, 0);
+        vertices[5] = new Vector3(width, height, 0);
+        vertices[6] = new Vector3(0, height, depth);
+        vertices[7] = new Vector3(width, height, depth);
 
         // Back Face Vertices
-        vertices[8] = new Vector3(0, 0, newWidth);
-        vertices[9] = new Vector3(newWidth, 0, newWidth);
-        vertices[10] = new Vector3(0, newHeight, newWidth);
-        vertices[11] = new Vector3(newWidth, newHeight, newWidth);
+        vertices[8] = new Vector3(0, 0, depth);
+        vertices[9] = new Vector3(width, 0, depth);
+        vertices[10] = new Vector3(0, height, depth);
+        vertices[11] = new Vector3(width, height, depth);
 
         // Bottom Face Vertices
         vertices[12] = new Vector3(0, 0, 0);
-        vertices[13] = new Vector3(newWidth, 0, 0);
-        vertices[14] = new Vector3(0, 0, newWidth);
-        vertices[15] = new Vector3(newWidth, 0, newWidth);
+        vertices[13] = new Vector3(width, 0, 0);
+        vertices[14] = new Vector3(0, 0, depth);
+        vertices[15] = new Vector3(width, 0, depth);
 
         // Left Face Vertices
         vertices[16] = new Vector3(0, 0, 0);
-        vertices[17] = new Vector3(0, 0, newWidth);
-        vertices[18] = new Vector3(0, newHeight, 0);
-        vertices[19] = new Vector3(0, newHeight, newWidth);
+        vertices[17] = new Vector3(0, 0, depth);
+        vertices[18] = new Vector3(0, height, 0);
+        vertices[19] = new Vector3(0, height, depth);
         
         // Right Face Vertices
-        vertices[20] = new Vector3(newWidth, 0, 0);
-        vertices[21] = new Vector3(newWidth, 0, newWidth);
-        vertices[22] = new Vector3(newWidth, newHeight, 0);
-        vertices[23] = new Vector3(newWidth, newHeight, newWidth);
+        vertices[20] = new Vector3(width, 0, 0);
+        vertices[21] = new Vector3(width, 0, depth);
+        vertices[22] = new Vector3(width, height, 0);
+        vertices[23] = new Vector3(width, height, depth);
 
         // Step 2 - Create & Assign Triangles
         int[] triangles = new int[36];
@@ -139,41 +183,48 @@ public class ProceduralShapes : MonoBehaviour
         // Step 3 - Create & Assign normal
         Vector3[] normals = new Vector3[24];
 
+        Vector3 front = Vector3.forward;
+        Vector3 back = Vector3.back;
+        Vector3 top = Vector3.up;
+        Vector3 bottom = Vector3.down;
+        Vector3 left = Vector3.left;
+        Vector3 right = Vector3.right;
+
         // Front Face normals
-        normals[0] = -Vector3.forward;
-        normals[1] = -Vector3.forward;
-        normals[2] = -Vector3.forward;
-        normals[3] = -Vector3.forward;
+        normals[0] = front;
+        normals[1] = front;
+        normals[2] = front;
+        normals[3] = front;
 
         // Top Face normals
-        normals[4] = -Vector3.forward;
-        normals[5] = -Vector3.forward;
-        normals[6] = -Vector3.forward;
-        normals[7] = -Vector3.forward;
+        normals[4] = top;
+        normals[5] = top;
+        normals[6] = top;
+        normals[7] = top;
 
         // Back Face normals
-        normals[8] = -Vector3.forward;
-        normals[9] = -Vector3.forward;
-        normals[10] = -Vector3.forward;
-        normals[11] = -Vector3.forward;
+        normals[8] = back;
+        normals[9] = back;
+        normals[10] = back;
+        normals[11] = back;
 
         // Bottom Face normals
-        normals[12] = -Vector3.forward;
-        normals[13] = -Vector3.forward;
-        normals[14] = -Vector3.forward;
-        normals[15] = -Vector3.forward;
+        normals[12] = bottom;
+        normals[13] = bottom;
+        normals[14] = bottom;
+        normals[15] = bottom;
 
         // Left Face normals
-        normals[16] = -Vector3.forward;
-        normals[17] = -Vector3.forward;
-        normals[18] = -Vector3.forward;
-        normals[19] = -Vector3.forward;
+        normals[16] = left;
+        normals[17] = left;
+        normals[18] = left;
+        normals[19] = left;
 
         // Right Face normals
-        normals[20] = -Vector3.forward;
-        normals[21] = -Vector3.forward;
-        normals[22] = -Vector3.forward;
-        normals[23] = -Vector3.forward;
+        normals[20] = right;
+        normals[21] = right;
+        normals[22] = right;
+        normals[23] = right;
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;
@@ -182,14 +233,14 @@ public class ProceduralShapes : MonoBehaviour
         mesh.Optimize();
     }
 
-    void GenerateQuad(float newWidth, float newHeight)
+    void GenerateQuad()
     {
         // Step 1 - Create & Assign Vertices
         Vector3[] vertices = new Vector3[4];
         vertices[0] = new Vector3(0, 0, 0);
-        vertices[1] = new Vector3(newWidth, 0, 0);
-        vertices[2] = new Vector3(0, newHeight, 0);
-        vertices[3] = new Vector3(newWidth, newHeight, 0);
+        vertices[1] = new Vector3(width, 0, 0);
+        vertices[2] = new Vector3(0, height, 0);
+        vertices[3] = new Vector3(width, height, 0);
 
         // Step 2 - Create & Assign Triangles
         int[] triangles = new int[6];
