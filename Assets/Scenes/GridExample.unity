@@ -840,8 +840,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6f2cd5509634b78a9c7bf2b3044305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 200
-  height: 200
+  width: 10
+  height: 10
   shapeWidth: 1
   shapeHeight: 3
   shapeDepth: 1
@@ -849,7 +849,7 @@ MonoBehaviour:
   randomSeed: 1
   ShapeType: 0
   shaderName: Lightweight Render Pipeline/Lit
-  applyProceduralMaterial: 1
+  applyProceduralMaterial: 0
   defaultMaterial: {fileID: 2100000, guid: 95bfc8d542f554a7b876e37ad67cedb3, type: 2}
   numOfShapesText: {fileID: 943787701}
   lengthOfTimeText: {fileID: 223616410}
