@@ -15,21 +15,25 @@ public class Grid : MonoBehaviour
     private int height = 1;
     private int prevHeight = 1;
 
-    private float constructionDelay = 1.0f;
-
     private GameObject[,] grid = null;
 
-    [SerializeField,Range(1,200)]
+    [SerializeField,Range(0.1f,20.0f)]
     private float shapeWidth = 2.0f;
 
-    [SerializeField,Range(1,200)]
+    private float prevShapeWidth = 2.0f;
+
+    [SerializeField,Range(0.1f,20.0f)]
     private float shapeHeight = 2.0f;
 
-    [SerializeField,Range(1,200)]
+    private float prevShapeHeight = 2.0f;
+
+    [SerializeField,Range(0.1f,20.0f)]
     private float shapeDepth = 2.0f;
 
-    [SerializeField,Range(1,200)]
-    private float maxRandomHeight = 10;
+    private float prevShapeDepth = 2.0f;
+
+    [SerializeField,Range(0.1f, 20.0f)]
+    private float maxRandomHeight = 10.0f;
 
     [SerializeField, Range(1,100)]
     private int randomSeed = 1;
@@ -41,11 +45,22 @@ public class Grid : MonoBehaviour
     [SerializeField]
     private string shaderName = "Lightweight Render Pipeline/Lit";
 
-    [SerializeField]
-    private bool applyProceduralMaterial = false;
+    [SerializeField, Tooltip("How many procedural materials to generate?")]
+    private int proceduralMaterialsToGenerate = 3;
+
+    private int prevProceduralMaterialsToGenerate = 3;
+
+    private Material[] proceduralMaterials = null;
 
     [SerializeField]
-    private Material defaultMaterial = null;
+    private Material[] defaultMaterials = null;
+
+    #region Margins
+
+    [SerializeField]
+    private Vector3 marginBetweenShapes = new Vector3(1.0f, 1.0f, 1.0f);
+
+    #endregion
 
     #region UI Bindings
 
@@ -55,14 +70,22 @@ public class Grid : MonoBehaviour
     [SerializeField]
     private Text lengthOfTimeText = null;
 
+    [SerializeField]
+    private bool makeShapesStatic = true;
+
     #endregion
     void Start()
-    {    
+    {   
         prevWidth = width;
         prevHeight = height;
 
         Random.InitState(randomSeed);
-        grid = new GameObject[height, width];       
+        grid = new GameObject[height, width];               
+        proceduralMaterials = new Material[proceduralMaterialsToGenerate];
+
+        // generate materials if needed
+        if(proceduralMaterialsToGenerate > 0 && defaultMaterials.Length == 0)
+            proceduralMaterials = MeshRendererExtensions.GetRandomMaterials(shaderName, proceduralMaterialsToGenerate);
 
         BuildGrid(); 
     }
@@ -108,10 +131,11 @@ public class Grid : MonoBehaviour
             cell.transform.parent = gameObject.transform;
         }
 
+        cell.isStatic = makeShapesStatic;
         cell.transform.position = 
-            new Vector3(shapeWidth * row,
+            Vector3.Scale(new Vector3(shapeWidth * row,
                         shapeHeight * Random.Range(1.0f, maxRandomHeight),
-                        shapeDepth * col);
+                        shapeDepth * col), marginBetweenShapes);
 
         MeshFilter meshFilter = cell.AddComponent<MeshFilter>();
         MeshRenderer renderer = cell.AddComponent<MeshRenderer>();
@@ -124,10 +148,10 @@ public class Grid : MonoBehaviour
         
         meshFilter.mesh = cube.Generate();
         
-        if(applyProceduralMaterial)
-            renderer.ApplyRandomMaterial(shaderName, cell.name);
-        else
-            renderer.material = defaultMaterial;
+        if(proceduralMaterials.Length > 0 && defaultMaterials.Length == 0)
+            renderer.material = proceduralMaterials[Random.Range(0, proceduralMaterialsToGenerate - 1)];
+        else if(proceduralMaterials.Length == 0 && defaultMaterials.Length > 0)
+            renderer.material = defaultMaterials[Random.Range(0, defaultMaterials.Length - 1)];
 
         yield return null;
     }
@@ -140,12 +164,17 @@ public class Grid : MonoBehaviour
             prevSeed = randomSeed;
         }
 
-        if(prevWidth != width || prevHeight != height)
+        if(prevWidth != width || prevHeight != height || prevShapeWidth != shapeWidth
+        || prevShapeHeight != shapeHeight || prevShapeDepth != shapeDepth)
         {
             ClearAll();
             
             prevWidth = width;
             prevHeight = height;
+            prevShapeWidth = shapeWidth;
+            prevShapeHeight = shapeHeight;
+            prevShapeDepth = shapeDepth;
+
             grid = new GameObject[height, width];
             
             BuildGrid();

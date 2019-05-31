@@ -849,8 +849,8 @@ MonoBehaviour:
   randomSeed: 1
   ShapeType: 0
   shaderName: Lightweight Render Pipeline/Lit
-  applyProceduralMaterial: 0
-  defaultMaterial: {fileID: 2100000, guid: 95bfc8d542f554a7b876e37ad67cedb3, type: 2}
+  proceduralMaterialsToGenerate: 25
+  defaultMaterials: []
   numOfShapesText: {fileID: 943787701}
   lengthOfTimeText: {fileID: 223616410}
 --- !u!1 &1755841881
