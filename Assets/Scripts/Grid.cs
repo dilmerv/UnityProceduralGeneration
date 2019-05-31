@@ -17,22 +17,22 @@ public class Grid : MonoBehaviour
 
     private GameObject[,] grid = null;
 
-    [SerializeField,Range(0.1f,20.0f)]
+    [SerializeField,Range(0.1f,50.0f)]
     private float shapeWidth = 2.0f;
 
     private float prevShapeWidth = 2.0f;
 
-    [SerializeField,Range(0.1f,20.0f)]
+    [SerializeField,Range(0.1f,50.0f)]
     private float shapeHeight = 2.0f;
 
     private float prevShapeHeight = 2.0f;
 
-    [SerializeField,Range(0.1f,20.0f)]
+    [SerializeField,Range(0.1f,50.0f)]
     private float shapeDepth = 2.0f;
 
     private float prevShapeDepth = 2.0f;
 
-    [SerializeField,Range(0.1f, 20.0f)]
+    [SerializeField,Range(0.1f, 50.0f)]
     private float maxRandomHeight = 10.0f;
 
     [SerializeField, Range(1,100)]
@@ -59,6 +59,15 @@ public class Grid : MonoBehaviour
 
     [SerializeField]
     private Vector3 marginBetweenShapes = new Vector3(1.0f, 1.0f, 1.0f);
+
+    #endregion
+
+    #region Physics
+
+    [SerializeField]
+    private bool shouldGenerateRigidBodies = false;
+
+    private bool prevShouldGenerateRigidBodies = false;
 
     #endregion
 
@@ -153,6 +162,11 @@ public class Grid : MonoBehaviour
         else if(proceduralMaterials.Length == 0 && defaultMaterials.Length > 0)
             renderer.material = defaultMaterials[Random.Range(0, defaultMaterials.Length - 1)];
 
+        if(shouldGenerateRigidBodies){
+            cell.AddComponent<BoxCollider>();
+            cell.AddComponent<Rigidbody>();
+        }
+
         yield return null;
     }
 
@@ -164,8 +178,7 @@ public class Grid : MonoBehaviour
             prevSeed = randomSeed;
         }
 
-        if(prevWidth != width || prevHeight != height || prevShapeWidth != shapeWidth
-        || prevShapeHeight != shapeHeight || prevShapeDepth != shapeDepth)
+        if(PropertiesChanged())
         {
             ClearAll();
             
@@ -174,11 +187,19 @@ public class Grid : MonoBehaviour
             prevShapeWidth = shapeWidth;
             prevShapeHeight = shapeHeight;
             prevShapeDepth = shapeDepth;
+            prevShouldGenerateRigidBodies = shouldGenerateRigidBodies;
 
             grid = new GameObject[height, width];
             
             BuildGrid();
         }
+    }
+
+    private bool PropertiesChanged()
+    {
+        return prevWidth != width || prevHeight != height || prevShapeWidth != shapeWidth
+            || prevShapeHeight != shapeHeight || prevShapeDepth != shapeDepth
+            || prevShouldGenerateRigidBodies != shouldGenerateRigidBodies;
     }
 
     private void ClearAll()
