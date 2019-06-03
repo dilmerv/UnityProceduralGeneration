@@ -33,7 +33,13 @@ public class Grid : MonoBehaviour
     private float prevShapeDepth = 2.0f;
 
     [SerializeField,Range(0.1f, 50.0f)]
-    private float maxRandomHeight = 10.0f;
+    private float maxRandomHeightOffset = 1.0f;
+
+    [SerializeField,Range(0.1f, 50.0f)]
+    private float maxRandomWidthOffset = 1.0f;
+
+    [SerializeField,Range(0.1f, 50.0f)]
+    private float maxRandomDepthOffset = 1.0f;
 
     [SerializeField, Range(1,100)]
     private int randomSeed = 1;
@@ -142,9 +148,11 @@ public class Grid : MonoBehaviour
 
         cell.isStatic = makeShapesStatic;
         cell.transform.position = 
-            Vector3.Scale(new Vector3(shapeWidth * row,
-                        shapeHeight * Random.Range(1.0f, maxRandomHeight),
-                        shapeDepth * col), marginBetweenShapes);
+            Vector3.Scale(new Vector3(
+                        shapeWidth  * row * Random.Range(1.0f, maxRandomWidthOffset),
+                        shapeHeight * Random.Range(1.0f, maxRandomHeightOffset),
+                        shapeDepth  * col * Random.Range(1.0f, maxRandomDepthOffset)), 
+                        marginBetweenShapes);
 
         MeshFilter meshFilter = cell.AddComponent<MeshFilter>();
         MeshRenderer renderer = cell.AddComponent<MeshRenderer>();
