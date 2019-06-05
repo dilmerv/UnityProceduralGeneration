@@ -389,7 +389,7 @@ Transform:
   m_GameObject: {fileID: 210836232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 200, y: 1, z: 200}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -679,36 +679,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267464265}
   m_CullTransparentMesh: 0
---- !u!1 &1385274226
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1385274227}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1385274227
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385274226}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 174.48676, y: 25.07076, z: 156.01114}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1416663851
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,13 +932,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6f2cd5509634b78a9c7bf2b3044305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 5
-  height: 5
-  shapeWidth: 1
-  shapeHeight: 3
-  shapeDepth: 1
-  maxRandomHeight: 4
-  randomSeed: 1
+  width: 38
+  height: 10
+  shapeWidth: 2.5
+  shapeHeight: 2.9
+  shapeDepth: 1.7
+  maxRandomHeightOffset: 1.9
+  maxRandomWidthOffset: 1
+  maxRandomDepthOffset: 1
+  randomSeed: 55
   ShapeType: 0
   shaderName: Lightweight Render Pipeline/Lit
   proceduralMaterialsToGenerate: 25

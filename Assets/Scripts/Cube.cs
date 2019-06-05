@@ -153,7 +153,11 @@ public class Cube : Shape
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.normals = normals;
-        
+
+        // TODO assign UVs for now an empty array
+        Vector2[] uvs = new Vector2[vertices.Length];
+        mesh.uv = uvs;
+
         mesh.Optimize();
 
         return mesh;
