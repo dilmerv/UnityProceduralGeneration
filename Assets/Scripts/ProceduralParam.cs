@@ -19,6 +19,15 @@ public class ProceduralParam : ScriptableObject
     public float shapeDepth = 2.0f;
 
     [SerializeField,Range(0.1f, 50.0f)]
+    public float maxRandomHeight = 1.0f;
+
+    [SerializeField,Range(0.1f, 50.0f)]
+    public float maxRandomWidth = 1.0f;
+
+    [SerializeField,Range(0.1f, 50.0f)]
+    public float maxRandomDepth = 1.0f;
+
+    [SerializeField,Range(0.1f, 50.0f)]
     public float maxRandomHeightOffset = 1.0f;
 
     [SerializeField,Range(0.1f, 50.0f)]
@@ -48,6 +57,6 @@ public class ProceduralParam : ScriptableObject
     [SerializeField]
     public string shaderName = "Lightweight Render Pipeline/Lit";
 
-    [SerializeField, Tooltip("How many procedural materials to generate?")]
+    [SerializeField, Range(0,100), Tooltip("How many procedural materials to generate?")]
     public int proceduralMaterialsToGenerate = 3;
 }

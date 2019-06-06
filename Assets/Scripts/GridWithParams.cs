@@ -33,7 +33,7 @@ public class GridWithParams : MonoBehaviour
         }
     }
 
-    void Start() => BuildGrid();
+    //void Start() => BuildGrid();
 
     void Reset()
     {
@@ -105,11 +105,11 @@ public class GridWithParams : MonoBehaviour
         MeshRenderer renderer = cell.AddComponent<MeshRenderer>();
 
         Cube cube = new Cube {
-            Width = parameters.shapeWidth,
-            Height = parameters.shapeHeight,
-            Depth = parameters.shapeDepth
+            Width = parameters.shapeWidth * Random.Range(1.0f, parameters.maxRandomWidth),
+            Height = parameters.shapeHeight * Random.Range(1.0f, parameters.maxRandomHeight),
+            Depth = parameters.shapeDepth * Random.Range(1.0f, parameters.maxRandomDepth)
         };
-        
+
         meshFilter.mesh = cube.Generate();
         
         if(proceduralMaterials.Length > 0 && parameters.defaultMaterials.Length == 0)
@@ -138,5 +138,6 @@ public class GridWithParams : MonoBehaviour
                 }
             }
         }
+        grid = null;
     }
 }
