@@ -24,6 +24,9 @@ public class GridWithParams : MonoBehaviour
 
     #endregion
 
+    private Bounds bounds;
+
+
     void OnEnable() 
     {
         if(parameters == null)
@@ -33,8 +36,6 @@ public class GridWithParams : MonoBehaviour
         }
     }
 
-    //void Start() => BuildGrid();
-
     void Reset()
     {
         ClearAll();
@@ -42,11 +43,14 @@ public class GridWithParams : MonoBehaviour
         Random.InitState(parameters.randomSeed);
         grid = new GameObject[parameters.height, parameters.width];               
         proceduralMaterials = new Material[parameters.proceduralMaterialsToGenerate];
+        bounds = new Bounds (Vector3.zero, Vector3.zero);
 
         // generate materials if needed
         if(parameters.proceduralMaterialsToGenerate > 0 && parameters.defaultMaterials.Length == 0)
             proceduralMaterials = MeshRendererExtensions.GetRandomMaterials(parameters.shaderName, parameters.proceduralMaterialsToGenerate);
     }
+
+    void Start() => BuildGrid();
 
     public void BuildGrid()
     {
@@ -56,8 +60,8 @@ public class GridWithParams : MonoBehaviour
 
         numOfShapesText.text = $"{parameters.width * parameters.height}";
 
-        DateTime started = DateTime.Now;
-        
+        DateTime started = DateTime.Now;        
+
         for(int row = 0; row < parameters.height; row++)
         {
             for(int col = 0; col < parameters.width; col++)
@@ -96,9 +100,8 @@ public class GridWithParams : MonoBehaviour
         cell.isStatic = parameters.makeShapesStatic;
         cell.transform.localPosition =  
             Vector3.Scale(new Vector3(
-                        parameters.shapeWidth  * row * Random.Range(1.0f, parameters.maxRandomWidthOffset),
-                        parameters.shapeHeight * Random.Range(1.0f, parameters.maxRandomHeightOffset),
-                        parameters.shapeDepth  * col * Random.Range(1.0f, parameters.maxRandomDepthOffset)), 
+                        parameters.shapeWidth * row * Random.Range(1.0f, parameters.maxRandomWidthOffset), 0,
+                        parameters.shapeDepth * col * Random.Range(1.0f, parameters.maxRandomDepthOffset)), 
                         parameters.marginBetweenShapes);
 
         MeshFilter meshFilter = cell.AddComponent<MeshFilter>();
@@ -111,7 +114,7 @@ public class GridWithParams : MonoBehaviour
         };
 
         meshFilter.mesh = cube.Generate();
-        
+
         if(proceduralMaterials.Length > 0 && parameters.defaultMaterials.Length == 0)
             renderer.material = proceduralMaterials[Random.Range(0, parameters.proceduralMaterialsToGenerate - 1)];
         else if(proceduralMaterials.Length == 0 && parameters.defaultMaterials.Length > 0)
@@ -121,8 +124,19 @@ public class GridWithParams : MonoBehaviour
             cell.AddComponent<BoxCollider>();
             cell.AddComponent<Rigidbody>();
         }
+        
+        // calculate bounds
+        bounds.Encapsulate(renderer.bounds);
 
         yield return null;
+    }
+
+    public Bounds Bounds
+    {
+        get 
+        {
+            return bounds;
+        }
     }
 
     private void ClearAll()
