@@ -138,6 +138,14 @@ public class GridWithParams : MonoBehaviour
                 }
             }
         }
+        
+        if(transform.childCount > 0)
+        {
+            foreach(Transform child in transform)
+            {
+                DestroyImmediate(child.gameObject);
+            }
+        }
         grid = null;
     }
 }

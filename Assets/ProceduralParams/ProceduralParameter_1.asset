@@ -15,7 +15,7 @@ MonoBehaviour:
   width: 14
   height: 12
   shapeWidth: 2
-  shapeHeight: 2
+  shapeHeight: 0.7
   shapeDepth: 2
   maxRandomHeight: 7.2
   maxRandomWidth: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
   maxRandomHeightOffset: 1
   maxRandomWidthOffset: 1
   maxRandomDepthOffset: 1
-  randomSeed: 53
+  randomSeed: 35
   ShapeType: 0
   makeShapesStatic: 1
   shouldGenerateRigidBodies: 0
