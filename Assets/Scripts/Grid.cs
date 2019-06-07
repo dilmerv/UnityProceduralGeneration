@@ -144,7 +144,7 @@ public class Grid : MonoBehaviour
         }
 
         cell.isStatic = makeShapesStatic;
-        cell.transform.position = 
+        cell.transform.localPosition = 
             Vector3.Scale(new Vector3(
                         shapeWidth  * row * Random.Range(1.0f, maxRandomWidthOffset),
                         shapeHeight * Random.Range(1.0f, maxRandomHeightOffset),

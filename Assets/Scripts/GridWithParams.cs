@@ -94,7 +94,7 @@ public class GridWithParams : MonoBehaviour
         }
 
         cell.isStatic = parameters.makeShapesStatic;
-        cell.transform.position = 
+        cell.transform.localPosition =  
             Vector3.Scale(new Vector3(
                         parameters.shapeWidth  * row * Random.Range(1.0f, parameters.maxRandomWidthOffset),
                         parameters.shapeHeight * Random.Range(1.0f, parameters.maxRandomHeightOffset),
@@ -138,7 +138,7 @@ public class GridWithParams : MonoBehaviour
                 }
             }
         }
-        
+
         if(transform.childCount > 0)
         {
             foreach(Transform child in transform)
