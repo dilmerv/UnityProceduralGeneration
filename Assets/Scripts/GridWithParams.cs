@@ -24,6 +24,7 @@ public class GridWithParams : MonoBehaviour
 
     #endregion
 
+    [SerializeField]
     private Bounds bounds;
 
 
