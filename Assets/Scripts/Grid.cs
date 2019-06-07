@@ -153,7 +153,7 @@ public class Grid : MonoBehaviour
 
         MeshFilter meshFilter = cell.AddComponent<MeshFilter>();
         MeshRenderer renderer = cell.AddComponent<MeshRenderer>();
-
+    
         Cube cube = new Cube {
             Width = shapeWidth,
             Height = shapeHeight,

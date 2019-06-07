@@ -108,13 +108,23 @@ public class GridWithParams : MonoBehaviour
         MeshFilter meshFilter = cell.AddComponent<MeshFilter>();
         MeshRenderer renderer = cell.AddComponent<MeshRenderer>();
 
-        Cube cube = new Cube {
-            Width = parameters.shapeWidth * Random.Range(1.0f, parameters.maxRandomWidth),
-            Height = parameters.shapeHeight * Random.Range(1.0f, parameters.maxRandomHeight),
-            Depth = parameters.shapeDepth * Random.Range(1.0f, parameters.maxRandomDepth)
-        };
+        Shape shape = null;
 
-        meshFilter.mesh = cube.Generate();
+        if(parameters.ShapeType == ShapeTypes.Cube){
+            shape = new Cube {
+                Width = parameters.shapeWidth * Random.Range(1.0f, parameters.maxRandomWidth),
+                Height = parameters.shapeHeight * Random.Range(1.0f, parameters.maxRandomHeight),
+                Depth = parameters.shapeDepth * Random.Range(1.0f, parameters.maxRandomDepth)
+            };
+        }
+        else if(parameters.ShapeType == ShapeTypes.Quad){
+            shape = new Quad {
+                Width = parameters.shapeWidth * Random.Range(1.0f, parameters.maxRandomWidth),
+                Height = parameters.shapeHeight * Random.Range(1.0f, parameters.maxRandomHeight),
+            };
+        }
+
+        meshFilter.mesh = shape.Generate();
 
         if(proceduralMaterials.Length > 0 && parameters.defaultMaterials.Length == 0)
             renderer.material = proceduralMaterials[Random.Range(0, parameters.proceduralMaterialsToGenerate - 1)];
