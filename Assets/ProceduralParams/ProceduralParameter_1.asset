@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafffc9e7f9ad47f994e4bd946c83e2c, type: 3}
   m_Name: ProceduralParameter_1
   m_EditorClassIdentifier: 
-  width: 20
-  height: 14
+  width: 11
+  height: 15
   shapeWidth: 2
-  shapeHeight: 0.7
+  shapeHeight: 2
   shapeDepth: 2
-  maxRandomHeight: 14.9
+  maxRandomHeight: 8.4
   maxRandomWidth: 1
   maxRandomDepth: 1
   maxRandomHeightOffset: 1
   maxRandomWidthOffset: 1
   maxRandomDepthOffset: 1
-  randomSeed: 42
+  randomSeed: 35
   ShapeType: 0
   makeShapesStatic: 1
   shouldGenerateRigidBodies: 0
