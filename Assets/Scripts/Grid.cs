@@ -46,9 +46,6 @@ public class Grid : MonoBehaviour
     private int prevSeed = 1;
 
     [SerializeField]
-    private ShapeTypes ShapeType = ShapeTypes.Cube;
-
-    [SerializeField]
     private string shaderName = "Lightweight Render Pipeline/Lit";
 
     [SerializeField, Tooltip("How many procedural materials to generate?")]
@@ -196,6 +193,7 @@ public class Grid : MonoBehaviour
             prevShapeHeight = shapeHeight;
             prevShapeDepth = shapeDepth;
             prevShouldGenerateRigidBodies = shouldGenerateRigidBodies;
+            prevProceduralMaterialsToGenerate = proceduralMaterialsToGenerate;
 
             grid = new GameObject[height, width];
             
@@ -207,7 +205,8 @@ public class Grid : MonoBehaviour
     {
         return prevWidth != width || prevHeight != height || prevShapeWidth != shapeWidth
             || prevShapeHeight != shapeHeight || prevShapeDepth != shapeDepth
-            || prevShouldGenerateRigidBodies != shouldGenerateRigidBodies;
+            || prevShouldGenerateRigidBodies != shouldGenerateRigidBodies
+            || prevProceduralMaterialsToGenerate != proceduralMaterialsToGenerate;
     }
 
     private void ClearAll()
