@@ -20,3 +20,7 @@ Various examples for generating 3D procedurally with Unity3d
 [Video #5](https://youtu.be/JleM2I_6KIk)
 
 [Video #6](https://youtu.be/-9ZnjzkBv1k)
+
+4- GridWithProceduralParamsExample: Provides you with a demo on how to use the GridsWithParams script and editor script. This scene also consumes the scriptable objects residing in /Assets/ProceduralParams folder.
+
+[Video #7](https://youtu.be/CcBR7cUZoXE)
