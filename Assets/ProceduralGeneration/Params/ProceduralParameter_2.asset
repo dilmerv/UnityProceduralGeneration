@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bafffc9e7f9ad47f994e4bd946c83e2c, type: 3}
-  m_Name: ProceduralParameter_3
+  m_Name: ProceduralParameter_2
   m_EditorClassIdentifier: 
   width: 12
-  height: 14
+  height: 43
   shapeWidth: 2
   shapeHeight: 2
   shapeDepth: 2
-  maxRandomHeight: 2.2
+  maxRandomHeight: 12.5
   maxRandomWidth: 1
   maxRandomDepth: 1
   maxRandomHeightOffset: 1
   maxRandomWidthOffset: 1
   maxRandomDepthOffset: 1
-  randomSeed: 51
+  randomSeed: 28
   ShapeType: 0
   makeShapesStatic: 1
   shouldGenerateRigidBodies: 0

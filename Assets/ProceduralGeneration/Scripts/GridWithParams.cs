@@ -51,7 +51,29 @@ public class GridWithParams : MonoBehaviour
             proceduralMaterials = MeshRendererExtensions.GetRandomMaterials(parameters.shaderName, parameters.proceduralMaterialsToGenerate);
     }
 
-    void Start() => BuildGrid();
+    void Start() {
+
+        BuildGrid();
+
+        Tuple<Text, DateTime> oldResults = GetTextAndDateTimeOld();
+        Debug.Log($"Item1 {oldResults.Item1} Item2 {oldResults.Item2}");
+
+        (Text lengthOfTime, DateTime dateTimeNow) = GetTextAndDateTimeNew();
+        Debug.Log($"LengthOfTime {lengthOfTime} DateTimeNow {dateTimeNow}");
+
+        var newResults = GetTextAndDateTimeNew();
+        Debug.Log($"LengthOfTime {newResults.lengthOfTimeText} DateTimeNow {newResults.dateTimeNow}");
+    }
+    
+    public Tuple<Text, DateTime> GetTextAndDateTimeOld()
+    {
+        return Tuple.Create(lengthOfTimeText, DateTime.Now);
+    }
+
+    public (Text lengthOfTimeText, DateTime dateTimeNow) GetTextAndDateTimeNew()
+    {
+        return (lengthOfTimeText, DateTime.Now);
+    }
 
     public void BuildGrid()
     {
@@ -79,7 +101,7 @@ public class GridWithParams : MonoBehaviour
             lengthOfTimeText.text = $"{diff.Seconds}.{diff.Milliseconds} seconds";
         else 
             lengthOfTimeText.text = $"{diff.Minutes}.{diff.Seconds} minutes";
-            
+        
     }
     
     IEnumerator AddCell(int row, int col)
@@ -120,7 +142,7 @@ public class GridWithParams : MonoBehaviour
         else if(parameters.ShapeType == ShapeTypes.Quad){
             shape = new Quad {
                 Width = parameters.shapeWidth * Random.Range(1.0f, parameters.maxRandomWidth),
-                Height = parameters.shapeHeight * Random.Range(1.0f, parameters.maxRandomHeight),
+                Depth = parameters.shapeDepth * Random.Range(1.0f, parameters.maxRandomDepth),
             };
         }
 

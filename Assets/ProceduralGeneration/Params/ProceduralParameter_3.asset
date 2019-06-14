@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bafffc9e7f9ad47f994e4bd946c83e2c, type: 3}
-  m_Name: ProceduralParameter_1
+  m_Name: ProceduralParameter_3
   m_EditorClassIdentifier: 
-  width: 11
-  height: 15
+  width: 43
+  height: 33
   shapeWidth: 2
   shapeHeight: 2
   shapeDepth: 2
-  maxRandomHeight: 8.4
+  maxRandomHeight: 7
   maxRandomWidth: 1
   maxRandomDepth: 1
-  maxRandomHeightOffset: 1
+  maxRandomHeightOffset: 19
   maxRandomWidthOffset: 1
   maxRandomDepthOffset: 1
-  randomSeed: 35
+  randomSeed: 49
   ShapeType: 0
   makeShapesStatic: 1
   shouldGenerateRigidBodies: 0
   marginBetweenShapes: {x: 1, y: 1, z: 1}
   defaultMaterials: []
   shaderName: Lightweight Render Pipeline/Lit
-  proceduralMaterialsToGenerate: 49
+  proceduralMaterialsToGenerate: 47

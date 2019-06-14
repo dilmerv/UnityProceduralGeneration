@@ -12,8 +12,8 @@ public class Quad : Shape
         Vector3[] vertices = new Vector3[4];
         vertices[0] = new Vector3(0, 0, 0);
         vertices[1] = new Vector3(Width, 0, 0);
-        vertices[2] = new Vector3(0, 0, Height);
-        vertices[3] = new Vector3(Width,0, Height);
+        vertices[2] = new Vector3(0, 0, Depth);
+        vertices[3] = new Vector3(Width,0, Depth);
 
         // Step 2 - Create & Assign Triangles
         int[] triangles = new int[6];
